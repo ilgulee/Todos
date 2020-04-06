@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Todos</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="task_title">Task Title</string>
+    <string name="enter_a_title_for_task">Enter a title for task</string>
+    <string name="task_details">TASK DETAILS</string>
+    <string name="enter_details_for_task">Enter details for task</string>
 </resources>
