@@ -67,16 +67,20 @@ class TasksListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
             val task = tasks[position]
-            holder.apply {
-                taskTitle.text = task.taskTitle
-                completeCheckbox.isChecked = task.isCompleted
-            }
+            holder.bind(task)
         }
 
     }
 
     private inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val taskTitle = itemView.findViewById<TextView>(R.id.task_title)
-        val completeCheckbox = itemView.findViewById<CheckBox>(R.id.complete_checkbox)
+        private lateinit var task: Task
+        val taskTitle: TextView = itemView.findViewById(R.id.task_title)
+        val completeCheckbox: CheckBox = itemView.findViewById(R.id.complete_checkbox)
+
+        fun bind(task: Task) {
+            this.task = task
+            taskTitle.text = this.task.taskTitle
+            completeCheckbox.isChecked = this.task.isCompleted
+        }
     }
 }
