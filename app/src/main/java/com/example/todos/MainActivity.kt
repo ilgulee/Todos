@@ -2,6 +2,7 @@ package com.example.todos
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.todos.tasks.TasksListFragment
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         if (currentFragment == null) {
-            val fragment = TaskFragment()
+            val fragment = TasksListFragment.newInstance()
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment)
                 .commit()
         }

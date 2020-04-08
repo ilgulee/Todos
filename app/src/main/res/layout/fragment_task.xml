@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TaskFragment">
+    tools:context=".task.TaskFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_task_fab"
@@ -17,24 +17,22 @@
         android:focusable="true"
         android:src="@drawable/ic_done"
         app:fabSize="normal"
-        app:layout_anchor="@id/scroll_view"
-        app:layout_anchorGravity="end|right|bottom" />
+        android:layout_gravity="bottom|end" />
 
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
             <TextView
+                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?android:listSeparatorTextViewStyle"
                 android:text="@string/task_title" />
 
             <EditText
@@ -47,9 +45,9 @@
                 android:textSize="18sp" />
 
             <TextView
+                style="?android:listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?android:listSeparatorTextViewStyle"
                 android:text="@string/task_details" />
 
             <EditText
