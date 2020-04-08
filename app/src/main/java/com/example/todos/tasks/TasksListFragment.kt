@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,15 +73,24 @@ class TasksListFragment : Fragment() {
 
     }
 
-    private inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
         private lateinit var task: Task
         val taskTitle: TextView = itemView.findViewById(R.id.task_title)
         val completeCheckbox: CheckBox = itemView.findViewById(R.id.complete_checkbox)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(task: Task) {
             this.task = task
             taskTitle.text = this.task.taskTitle
             completeCheckbox.isChecked = this.task.isCompleted
+        }
+
+        override fun onClick(v: View?) {
+            Toast.makeText(context, "${task.taskTitle} clicked", Toast.LENGTH_SHORT).show()
         }
     }
 }
