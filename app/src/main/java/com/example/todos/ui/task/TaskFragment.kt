@@ -10,18 +10,36 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.todos.R
 import com.example.todos.data.model.Task
+import timber.log.Timber
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
+
+private const val ARG_TASK_ID = "taskId"
+
 class TaskFragment : Fragment() {
     private lateinit var task: Task
     private lateinit var taskTitle: EditText
     private lateinit var taskDetails: EditText
 
+    companion object {
+        fun newInstance(taskId: UUID): TaskFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_TASK_ID, taskId)
+            }
+            return TaskFragment().apply {
+                arguments = args
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         task = Task()
+        val taskId = arguments?.getSerializable(ARG_TASK_ID) as UUID
+        Timber.i("retrieved args bundle taskId is $taskId")
     }
 
     override fun onCreateView(

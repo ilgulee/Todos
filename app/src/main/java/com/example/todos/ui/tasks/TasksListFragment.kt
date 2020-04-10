@@ -1,12 +1,12 @@
 package com.example.todos.ui.tasks
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +15,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todos.R
 import com.example.todos.data.model.Task
 import timber.log.Timber
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class TasksListFragment : Fragment() {
+    interface Callbacks {
+        fun onTasksListItemSelected(taskId: UUID)
+    }
 
+    private var callbacks: Callbacks? = null
     private val viewModel: TasksListViewModel by lazy {
         ViewModelProvider(this).get(TasksListViewModel::class.java)
     }
@@ -36,6 +41,16 @@ class TasksListFragment : Fragment() {
         fun newInstance(): TasksListFragment {
             return TasksListFragment()
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     override fun onCreateView(
@@ -102,7 +117,8 @@ class TasksListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            Toast.makeText(context, "${task.taskTitle} clicked", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "${task.taskTitle} clicked", Toast.LENGTH_SHORT).show()
+            callbacks?.onTasksListItemSelected(task.taskId)
         }
     }
 }
