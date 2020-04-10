@@ -1,4 +1,4 @@
-package com.example.todos.task
+package com.example.todos.ui.task
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.todos.R
-import com.example.todos.data.Task
+import com.example.todos.data.model.Task
 
 /**
  * A simple [Fragment] subclass.

@@ -1,4 +1,4 @@
-package com.example.todos.tasks
+package com.example.todos.ui.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,12 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todos.R
-import com.example.todos.data.Task
+import com.example.todos.data.model.Task
 import timber.log.Timber
 
 /**
@@ -20,16 +21,16 @@ import timber.log.Timber
  */
 class TasksListFragment : Fragment() {
 
-    private val tasksListViewModel: TasksListViewModel by lazy {
+    private val viewModel: TasksListViewModel by lazy {
         ViewModelProvider(this).get(TasksListViewModel::class.java)
     }
     private lateinit var tasksListRecyclerView: RecyclerView
-    private var adapter: TaskAdapter? = null
+    private var adapter: TaskAdapter? = TaskAdapter(emptyList())
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Timber.d("Total tasks: ${tasksListViewModel.tasks.size}")
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        Timber.d("Total tasks: ${tasksListViewModel.tasks.size}")
+//    }
 
     companion object {
         fun newInstance(): TasksListFragment {
@@ -45,12 +46,23 @@ class TasksListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_tasks_list, container, false)
         tasksListRecyclerView = view.findViewById(R.id.tasks_list)
         tasksListRecyclerView.layoutManager = LinearLayoutManager(context)
-        updateUI()
+        tasksListRecyclerView.adapter = adapter
+//        updateUI()
         return view
     }
 
-    private fun updateUI() {
-        val tasks = tasksListViewModel.tasks
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.tasksListLiveData.observe(viewLifecycleOwner, Observer { tasks ->
+            tasks?.let {
+                Timber.i("task liveData ${tasks.size}")
+                updateUI(tasks)
+            }
+        })
+    }
+
+    private fun updateUI(tasks: List<Task>) {
+//        val tasks = tasksListViewModel.tasks
         adapter = TaskAdapter(tasks)
         tasksListRecyclerView.adapter = adapter
     }
