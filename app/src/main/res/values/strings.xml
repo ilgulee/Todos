@@ -7,4 +7,5 @@
     <string name="enter_a_title_for_task">Enter a title for task</string>
     <string name="task_details">TASK DETAILS</string>
     <string name="enter_details_for_task">Enter details for task</string>
+    <string name="done">done</string>
 </resources>

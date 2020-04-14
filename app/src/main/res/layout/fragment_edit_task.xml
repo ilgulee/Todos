@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.task.TaskFragment">
+    tools:context=".ui.task.edit.EditTaskFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_task_fab"
@@ -58,6 +58,14 @@
                 android:hint="@string/enter_details_for_task"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/complete_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="1dp"
+                android:text="@string/done"
                 android:textSize="18sp" />
 
         </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.todos.ui.task
+package com.example.todos.ui.task.add
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,38 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.todos.R
 import com.example.todos.data.model.Task
+import kotlinx.android.synthetic.main.fragment_add_task.*
 import timber.log.Timber
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
+class AddTaskFragment : Fragment() {
 
-private const val ARG_TASK_ID = "taskId"
-
-class TaskFragment : Fragment() {
     private lateinit var task: Task
     private lateinit var taskTitle: EditText
     private lateinit var taskDetails: EditText
+    private val viewModel: AddTaskViewModel by lazy {
+        ViewModelProvider(this).get(AddTaskViewModel::class.java)
+    }
 
     companion object {
-        fun newInstance(taskId: UUID): TaskFragment {
-            val args = Bundle().apply {
-                putSerializable(ARG_TASK_ID, taskId)
-            }
-            return TaskFragment().apply {
-                arguments = args
-            }
+        fun newInstance(): AddTaskFragment {
+            return AddTaskFragment()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         task = Task()
-        val taskId = arguments?.getSerializable(ARG_TASK_ID) as UUID
-        Timber.i("retrieved args bundle taskId is $taskId")
     }
 
     override fun onCreateView(
@@ -47,10 +42,21 @@ class TaskFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_task, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_task, container, false)
         taskTitle = view.findViewById(R.id.task_title)
         taskDetails = view.findViewById(R.id.task_details)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        add_task_fab.setOnClickListener {
+            Timber.i("New task is $task")
+            viewModel.saveTask(task)
+            activity?.let {
+                it.onBackPressed()
+            }
+        }
     }
 
     override fun onStart() {

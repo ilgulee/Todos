@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todos.R
 import com.example.todos.data.model.Task
+import kotlinx.android.synthetic.main.fragment_tasks_list.*
 import timber.log.Timber
 import java.util.*
 
@@ -23,6 +24,7 @@ import java.util.*
 class TasksListFragment : Fragment() {
     interface Callbacks {
         fun onTasksListItemSelected(taskId: UUID)
+        fun onAddNewTaskFabClicked()
     }
 
     private var callbacks: Callbacks? = null
@@ -74,6 +76,10 @@ class TasksListFragment : Fragment() {
                 updateUI(tasks)
             }
         })
+
+        add_task_fab.setOnClickListener {
+            callbacks?.onAddNewTaskFabClicked()
+        }
     }
 
     private fun updateUI(tasks: List<Task>) {
